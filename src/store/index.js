@@ -14,7 +14,8 @@ export default new Vuex.Store({
     hospitals: {},
     specialists: [],
     doctorSpecialists: [],
-    doctorProfile: {}
+    doctorProfile: {},
+    user: {}
   },
   mutations: {
     CHANGE_IS_LOGGED_IN(state, payload) {
@@ -37,6 +38,9 @@ export default new Vuex.Store({
     },
     FETCHING_DOCTOR_PROFILE(state, payload) {
       state.doctorProfile = payload
+    },
+    FIND_USER_LOGIN(state, payload) {
+      state.user = payload
     }
   },
   actions: {
@@ -121,8 +125,6 @@ export default new Vuex.Store({
     },
 
     async fetchHospitals(context, payload) {
-      // console.log(payload);
-      // console.log(payload.id);
       try {
         let result;
         let url = '/hospitals'
@@ -206,6 +208,25 @@ export default new Vuex.Store({
           }
         })
         context.commit('FETCHING_DOCTOR_PROFILE', result.data)
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${err.response.data.message}`
+        });
+      }
+    },
+
+    async findUserLogin(context) {
+      try {
+        const result = await instanceAxios({
+          method: 'get',
+          url: '/users',
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
+        context.commit('FIND_USER_LOGIN', result.data)
       } catch (err) {
         Swal.fire({
           icon: "error",
