@@ -60,7 +60,7 @@
           <div class="text-sm">
             <button
               class="mt-4 text-primary-content btn btn-primary"
-              @click.prevent="addToFavouriteList(movieDetail.id)"
+              @click.prevent="chatWithDoctor(movieDetail.id)"
             >
               chat with doctor
             </button>
@@ -76,12 +76,13 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "DoctorProfile",
   computed: {
-    ...mapState(["doctorProfile"]),
+    ...mapState(["doctorProfile", 'user']),
   },
   methods: {
-    ...mapActions(["fetchDoctorProfile"]),
+    ...mapActions(["fetchDoctorProfile", 'findUserLogin']),
   },
   async created() {
+    await this.findUserLogin()
     await this.fetchDoctorProfile(this.$route.params.slug);
   },
 };
