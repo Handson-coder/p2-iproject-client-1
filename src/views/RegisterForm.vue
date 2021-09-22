@@ -10,7 +10,7 @@
             Dont have any Account?
           </h3>
           <h4 class="text-3xl">
-            Let's Sign Up first to join my Movies Ecek-Ecek Club..
+            Let's Sign Up to access more features..
           </h4>
         </div>
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-200">
@@ -52,7 +52,7 @@
             <div class="form-control mt-8">
               <button
                 type="button"
-                class="btn btn-accent text-primary-content"
+                class="btn btn-primary text-primary-content"
                 @click.prevent="clickSignUpButton"
               >
                 Sign Up

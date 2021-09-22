@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Hospital from '../views/Hospital.vue'
 import LoginForm from '../views/LoginForm.vue'
 import RegisterForm from '../views/RegisterForm.vue'
+import SpecialistDoctorPage from '../views/SpecialistDoctorPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Hospital',
+    component: Hospital
   },
   {
     path: '/login',
@@ -21,6 +22,11 @@ const routes = [
     path: '/register',
     name: 'RegisterForm',
     component: RegisterForm
+  },
+  {
+    path: '/specialist',
+    name: 'SpecialistDoctorPage',
+    component: SpecialistDoctorPage
   },
 ]
 
