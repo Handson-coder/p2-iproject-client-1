@@ -66,8 +66,41 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+import Swal from "sweetalert2";
 export default {
-  name: 'RegisterForm'
+  name: "RegisterForm",
+  data() {
+    return {
+      username: "",
+      email: "",
+      password: "",
+    };
+  },
+  computed: {
+    ...mapState(["isRegister"]),
+  },
+  methods: {
+    ...mapActions(["handleRegister"]),
+    async clickSignUpButton() {
+      const payload = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+      };
+      await this.handleRegister(payload);
+      if (this.isRegister) {
+        await this.$router.push("/login");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Sign Up Success.. Now, you can Sign in Here..",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      } 
+    },
+  },
 };
 </script>
 

@@ -57,9 +57,51 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
+import Swal from "sweetalert2";
 export default {
-  name: "Navbar"
-}
+  name: "Navbar",
+  computed: {
+    ...mapState(["isLoggedIn"]),
+  },
+  methods: {
+    ...mapMutations({
+      changeIsLoggedIn: "CHANGE_IS_LOGGED_IN",
+    }),
+    ...mapActions(["signOut"]),
+
+    async clickSignOutButton() {
+      await this.signOut();
+      if (this.$route.name == "Home")
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Sign Out Success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      else {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Sign Out Success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.$router.push("/");
+      }
+    },
+
+    async checkAccessToken() {
+      if (localStorage.access_token) {
+        await this.changeIsLoggedIn(true);
+      }
+    },
+  },
+  async created() {
+    await this.checkAccessToken();
+  },
+};
 </script>
 
 <style></style>

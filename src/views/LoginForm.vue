@@ -70,6 +70,8 @@
 
 <script>
 import GoogleLogin from "vue-google-login";
+import { mapState, mapActions } from "vuex";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -89,7 +91,46 @@ export default {
   },
   name: "LoginForm",
   components: {
-    GoogleLogin,
+    GoogleLogin,  
+  },
+  computed: {
+    ...mapState(['isLoggedIn'])
+  },
+  methods: {
+    ...mapActions(['handleGoogleLogin', 'handleLogin']),
+    async onSuccess(googleUser) {
+      const payload = {
+        access_token: googleUser.getAuthResponse().id_token,
+      };
+      await this.handleGoogleLogin(payload);
+      if (this.isLoggedIn && localStorage.access_token) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Sign in Success..",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.$router.push("/");
+      }
+    },
+    async clickLoginButton() {
+      const payload = {
+        email: this.email,
+        password: this.password,
+      };
+      await this.handleLogin(payload);
+      if (this.isLoggedIn && localStorage.access_token) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Sign in Success..",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.$router.push("/");
+      }
+    },
   },
 };
 </script>
