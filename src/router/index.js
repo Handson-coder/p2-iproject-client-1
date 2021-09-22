@@ -4,6 +4,8 @@ import Hospital from '../views/Hospital.vue'
 import LoginForm from '../views/LoginForm.vue'
 import RegisterForm from '../views/RegisterForm.vue'
 import SpecialistPage from '../views/SpecialistPage.vue'
+import SpecialistDoctor from '../views/SpecialistDoctor.vue'
+import DoctorProfile from '../views/DoctorProfile.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +29,16 @@ const routes = [
     path: '/specialist',
     name: 'SpecialistPage',
     component: SpecialistPage
+  },
+  {
+    path: '/specialist/:id',
+    name: 'SpecialistDoctor',
+    component: SpecialistDoctor
+  },
+  {
+    path: '/doctors/:slug',
+    name: 'DoctorProfile',
+    component: DoctorProfile
   },
 ]
 

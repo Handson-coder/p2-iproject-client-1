@@ -54,13 +54,11 @@ export default {
     ...mapState(["specialists"]),
   },
   methods: {
-    ...mapActions(["fetchSpecialist"]),
+    ...mapActions(["fetchSpecialist", 'fetchSpecialistDoctor']),
     async findDoctor(SpecialistId) {
-      const payload = {
-        SpecialistId
-      }
+      const payload = SpecialistId
       await this.fetchSpecialistDoctor(payload)
-      this.$router.push({name: 'SpecialistDoctor'})
+      this.$router.push(`/specialist/${payload}`)
     }
   },
   async created() {
