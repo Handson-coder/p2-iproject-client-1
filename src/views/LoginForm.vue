@@ -43,7 +43,7 @@
             <div class="form-control mt-8">
               <button
                 type="button"
-                class="btn btn-accent text-primary-content"
+                class="btn btn-primary text-primary-content"
                 @click.prevent="clickLoginButton"
               >
                 Sign In
