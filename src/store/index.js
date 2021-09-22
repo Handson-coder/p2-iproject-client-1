@@ -13,7 +13,8 @@ export default new Vuex.Store({
     provinces: [],
     hospitals: {},
     specialists: [],
-    doctorSpecialist: []
+    doctorSpecialists: [],
+    doctorProfile: {}
   },
   mutations: {
     CHANGE_IS_LOGGED_IN(state, payload) {
@@ -32,8 +33,11 @@ export default new Vuex.Store({
       state.specialists = payload
     },
     FETCHING_DOCTORS_SPECIALIST(state, payload) {
-      state.doctorSpecialist = payload
+      state.doctorSpecialists = payload
     },
+    FETCHING_DOCTOR_PROFILE(state, payload) {
+      state.doctorProfile = payload
+    }
   },
   actions: {
     async handleGoogleLogin(context, payload) {
@@ -156,7 +160,13 @@ export default new Vuex.Store({
 
     async fetchSpecialist(context) {
       try {
-        const result = await instanceAxios.get('/specialists')
+        const result = await instanceAxios({
+          method: 'get',
+          url: '/specialists',
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
         context.commit('FETCHING_SPECIALISTS', result.data)
       } catch (err) {
         Swal.fire({
@@ -171,12 +181,31 @@ export default new Vuex.Store({
       try {
         const result = await instanceAxios({
           method: 'get',
-          url: `/doctors/specialist/${payload.SpecialistId}`,
+          url: `/doctors/specialist/${payload}`,
           headers: {
             access_token: localStorage.access_token
           }
         })
         context.commit('FETCHING_DOCTORS_SPECIALIST', result.data)
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${err.response.data.message}`
+        });
+      }
+    },
+
+    async fetchDoctorProfile(context, payload) {
+      try {
+        const result = await instanceAxios({
+          method: 'get',
+          url: `/doctors/${payload}`,
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
+        context.commit('FETCHING_DOCTOR_PROFILE', result.data)
       } catch (err) {
         Swal.fire({
           icon: "error",
