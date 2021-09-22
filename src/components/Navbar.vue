@@ -3,7 +3,10 @@
     <div
       class="navbar mb-2 shadow-lg bg-neutral-focus text-neutral-content rounded-box"
     >
-      <div class="flex-1 px-2 mx-2 ">
+      <div class="flex-1 px-2 mx-2">
+        <div class="pr-5">
+          <img class="w-16 h-16" src="../assets/logo.png"/>
+        </div>
         <router-link
           class="btn btn-ghost btn-sm rounded-btn"
           :to="{ name: 'Hospital' }"
@@ -13,11 +16,11 @@
       <div class="flex-none hidden px-2 mx-2 lg:flex">
         <div class="flex items-stretch">
           <router-link
-            v-if="!isLoggedIn"
+            v-if="isLoggedIn"
             class="btn btn-ghost btn-sm rounded-btn"
-            :to="{ name: 'SpecialistDoctorPage' }"
+            :to="{ name: 'SpecialistPage' }"
           >
-            Doctor
+            Specialist
           </router-link>
           <router-link
             v-if="!isLoggedIn"

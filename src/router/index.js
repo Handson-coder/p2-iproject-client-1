@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Hospital from '../views/Hospital.vue'
 import LoginForm from '../views/LoginForm.vue'
 import RegisterForm from '../views/RegisterForm.vue'
-import SpecialistDoctorPage from '../views/SpecialistDoctorPage.vue'
+import SpecialistPage from '../views/SpecialistPage.vue'
 
 Vue.use(VueRouter)
 
@@ -25,8 +25,8 @@ const routes = [
   },
   {
     path: '/specialist',
-    name: 'SpecialistDoctorPage',
-    component: SpecialistDoctorPage
+    name: 'SpecialistPage',
+    component: SpecialistPage
   },
 ]
 

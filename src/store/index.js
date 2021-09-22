@@ -12,7 +12,8 @@ export default new Vuex.Store({
     isRegister: false,
     provinces: [],
     hospitals: {},
-
+    specialists: [],
+    doctorSpecialist: []
   },
   mutations: {
     CHANGE_IS_LOGGED_IN(state, payload) {
@@ -26,6 +27,12 @@ export default new Vuex.Store({
     },
     FETCHING_HOSPITALS(state, payload) {
       state.hospitals = payload
+    },
+    FETCHING_SPECIALISTS(state, payload) {
+      state.specialists = payload
+    },
+    FETCHING_DOCTORS_SPECIALIST(state, payload) {
+      state.doctorSpecialist = payload
     },
   },
   actions: {
@@ -138,6 +145,38 @@ export default new Vuex.Store({
           result = await instanceAxios.get(url)
         }
         context.commit('FETCHING_HOSPITALS', result.data)
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${err.response.data.message}`
+        });
+      }
+    },
+
+    async fetchSpecialist(context) {
+      try {
+        const result = await instanceAxios.get('/specialists')
+        context.commit('FETCHING_SPECIALISTS', result.data)
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${err.response.data.message}`
+        });
+      }
+    },
+
+    async fetchSpecialistDoctor(context, payload) {
+      try {
+        const result = await instanceAxios({
+          method: 'get',
+          url: `/doctors/specialist/${payload.SpecialistId}`,
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
+        context.commit('FETCHING_DOCTORS_SPECIALIST', result.data)
       } catch (err) {
         Swal.fire({
           icon: "error",
