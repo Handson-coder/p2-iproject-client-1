@@ -26,19 +26,28 @@
                 </p>
                 <!-- dikarenakan profile_section[0].valuenya akan berubah2 setiap di refresh, jadi saya melakukan seleksi disini memakai v-if agar mendapatkan hasil yang benar -->
                 <p
-                  v-if="!Number(this.doctorProfile.profile_sections[0].value) === true"
+                  v-if="
+                    !Number(this.doctorProfile.profile_sections[0].value) ===
+                      true
+                  "
                   class="mt-3 mb-5 text-1xl"
                 >
                   <b>ALUMNUS :</b> {{ doctorProfile.profile_sections[0].value }}
                 </p>
                 <p
-                  v-if="!Number(this.doctorProfile.profile_sections[1].value) === true"
+                  v-if="
+                    !Number(this.doctorProfile.profile_sections[1].value) ===
+                      true
+                  "
                   class="mt-3 mb-5 text-1xl"
                 >
                   <b>ALUMNUS :</b> {{ doctorProfile.profile_sections[1].value }}
                 </p>
                 <p
-                  v-if="!Number(this.doctorProfile.profile_sections[2].value) === true"
+                  v-if="
+                    !Number(this.doctorProfile.profile_sections[2].value) ===
+                      true
+                  "
                   class="mt-3 mb-5 text-1xl"
                 >
                   <b>ALUMNUS :</b> {{ doctorProfile.profile_sections[2].value }}
@@ -60,9 +69,17 @@
           <div class="text-sm">
             <button
               class="mt-4 text-primary-content btn btn-primary"
-              @click.prevent="chatWithDoctor(movieDetail.id)"
+              @click.prevent="
+                chatDoctor(
+                  user.email,
+                  user.username,
+                  doctorProfile.pre_salutation,
+                  doctorProfile.full_name,
+                  doctorProfile.post_salutation
+                )
+              "
             >
-              chat with doctor
+              request chat with doctor
             </button>
           </div>
         </div>
@@ -73,17 +90,42 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import Swal from "sweetalert2";
 export default {
   name: "DoctorProfile",
   computed: {
-    ...mapState(["doctorProfile", 'user']),
+    ...mapState(["doctorProfile", "user", "statusSent"]),
   },
   methods: {
-    ...mapActions(["fetchDoctorProfile", 'findUserLogin']),
+    ...mapActions(["fetchDoctorProfile", "findUserLogin", "chatWithDoctor"]),
+    async chatDoctor(
+      userEmail,
+      userUsername,
+      doctorPreSalutation,
+      doctorFullName,
+      doctorPostSalutation
+    ) {
+      const payload = {
+        to: userEmail,
+        username: userUsername,
+        doctor: `${doctorPreSalutation}${doctorFullName}${doctorPostSalutation}`,
+      };
+      await this.chatWithDoctor(payload);
+      if (this.statusSent) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Sign in Success..",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      await this.$router.push("/specialist");
+    },
   },
   async created() {
-    await this.findUserLogin()
     await this.fetchDoctorProfile(this.$route.params.slug);
+    await this.findUserLogin();
   },
 };
 </script>

@@ -5,7 +5,7 @@
     >
       <div class="flex-1 px-2 mx-2">
         <div class="pr-5">
-          <img class="w-16 h-16" src="../assets/logo.png"/>
+          <img class="w-16 h-16" src="../assets/logo.png" />
         </div>
         <router-link
           class="btn btn-ghost btn-sm rounded-btn"
@@ -21,6 +21,13 @@
             :to="{ name: 'SpecialistPage' }"
           >
             Specialist
+          </router-link>
+          <router-link
+            v-if="isLoggedIn"
+            class="btn btn-ghost btn-sm rounded-btn"
+            :to="{ name: 'ChatDoctor' }"
+          >
+            Consult
           </router-link>
           <router-link
             v-if="!isLoggedIn"
@@ -63,7 +70,7 @@ export default {
 
     async clickSignOutButton() {
       await this.signOut();
-      if (this.$route.name == "Home")
+      if (this.$router.name == "Home") {
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -71,7 +78,8 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
-      else {
+        this.$router.push("/login");
+      } else {
         Swal.fire({
           position: "top-end",
           icon: "success",

@@ -102,6 +102,7 @@ export default {
       const payload = {
         access_token: googleUser.getAuthResponse().id_token,
       };
+      console.log(payload.access_token);
       await this.handleGoogleLogin(payload);
       if (this.isLoggedIn && localStorage.access_token) {
         Swal.fire({
