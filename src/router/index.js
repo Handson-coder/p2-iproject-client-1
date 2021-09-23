@@ -7,6 +7,7 @@ import SpecialistPage from '../views/SpecialistPage.vue'
 import SpecialistDoctor from '../views/SpecialistDoctor.vue'
 import DoctorProfile from '../views/DoctorProfile.vue'
 import ChatDoctor from '../views/ChatDoctor.vue'
+import HospitalDetail from '../views/HospitalDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
     path: '/consult',
     name: 'ChatDoctor',
     component: ChatDoctor
+  },
+  {
+    path: '/hospitals/:slug',
+    name: 'HospitalDetail',
+    component: HospitalDetail
   },
 ]
 

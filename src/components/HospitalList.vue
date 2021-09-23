@@ -87,7 +87,7 @@ export default {
     ...mapState(["hospitals"]),
   },
   methods: {
-    ...mapActions(["fetchHospitals", 'goToDetailHospital']),
+    ...mapActions(["fetchHospitals", 'fetchHospitalProfile']),
     async setPage(page) {
       let payload = {};
       if (page) {
@@ -103,15 +103,17 @@ export default {
       });
     },
     async toDetailHospital(slug) {
-      await this.goToDetailHospital(slug);
+      // console.log(slug);
+      const payload = slug
+      await this.fetchHospitalProfile(payload);
       Swal.fire({
         position: "top-end",
         icon: "info",
-        title: "Fetching Movie.. Please Wait..",
+        title: "Fetching Hospital.. Please Wait..",
         showConfirmButton: false,
         timer: 1500,
       });
-      // this.$router.push(`/pub/movies/${movieId}`);
+      this.$router.push(`/hospitals/${slug}`);
     },
   },
   async created() {

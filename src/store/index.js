@@ -17,7 +17,8 @@ export default new Vuex.Store({
     doctorProfile: {},
     user: {},
     statusSent: false,
-    messages: []
+    messages: [],
+    hospitalProfile: {}
   },
   mutations: {
     CHANGE_IS_LOGGED_IN(state, payload) {
@@ -49,6 +50,9 @@ export default new Vuex.Store({
     },
     PUSH_MESSAGE(state, payload) {
       state.messages.push(payload)
+    },
+    FETCHING_HOSPITAL_PROFILE(state, payload) {
+      state.hospitalProfile = payload
     },
   },
   actions: {
@@ -267,6 +271,22 @@ export default new Vuex.Store({
         });
       }
 
+    },
+
+    async fetchHospitalProfile(context, payload) {
+      try {
+        const result = await instanceAxios({
+          method: 'get',
+          url: `/hospitals/${payload}`,
+        })
+        context.commit('FETCHING_HOSPITAL_PROFILE', result.data)
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${err.response.data.message}`
+        });
+      }
     },
 
     async signOut(context) {
