@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="flex flex-row">
-    <SidebarFilterHospital></SidebarFilterHospital>
-    <HospitalList></HospitalList>
+      <SidebarFilterHospital></SidebarFilterHospital>
+      <HospitalList></HospitalList>
     </div>
     <router-view />
   </div>
@@ -17,7 +17,7 @@ export default {
   name: "Home",
   components: {
     SidebarFilterHospital,
-    HospitalList
-  }
+    HospitalList,
+  },
 };
 </script>
