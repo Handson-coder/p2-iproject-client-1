@@ -58,9 +58,9 @@
       </div>
 
       <!-- MESSAGES -->
-      <div class="mt-20 mb-16">
+      <div class="justify-center mt-1 mb-28 pr-10 pl-64">
         <div class="clearfix">
-          <div class="bg-gray-300 w-3/4 mx-4 my-2 p-2 rounded-lg">
+          <div class="bg-gray-300 w-3/4 mx-4 my-2 p-10 rounded-lg">
             <!-- <div class="msg_history"> -->
             <IncomingMsg
               v-for="(msg, index) in messages"
