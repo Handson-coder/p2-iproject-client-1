@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <Navbar></Navbar>
-    <router-view/>
+    <CovidGraph></CovidGraph>
+    <router-view />
   </div>
 </template>
 
@@ -29,11 +30,13 @@
 </style>
 
 <script>
-import Navbar from './components/Navbar.vue'
+import Navbar from "./components/Navbar.vue";
+import CovidGraph from "./components/CovidGraph.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Navbar
-  }
-}
+    Navbar,
+    CovidGraph
+  },
+};
 </script>

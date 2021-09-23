@@ -18,7 +18,8 @@ export default new Vuex.Store({
     user: {},
     statusSent: false,
     messages: [],
-    hospitalProfile: {}
+    hospitalProfile: {},
+    covidStatusInIndonesia: {}
   },
   mutations: {
     CHANGE_IS_LOGGED_IN(state, payload) {
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     },
     FETCHING_HOSPITAL_PROFILE(state, payload) {
       state.hospitalProfile = payload
+    },
+    FETCHING_COVID_STATUS(state, payload) {
+      state.covidStatusInIndonesia = payload
     },
   },
   actions: {
@@ -280,6 +284,19 @@ export default new Vuex.Store({
           url: `/hospitals/${payload}`,
         })
         context.commit('FETCHING_HOSPITAL_PROFILE', result.data)
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${err.response.data.message}`
+        });
+      }
+    },
+
+    async fetchCovidStatusInIndonesia(context) {
+      try {
+        const result = await instanceAxios.get('/covid19/stats')
+        context.commit('FETCHING_COVID_STATUS', result.data)
       } catch (err) {
         Swal.fire({
           icon: "error",
