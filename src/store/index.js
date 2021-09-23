@@ -15,7 +15,9 @@ export default new Vuex.Store({
     specialists: [],
     doctorSpecialists: [],
     doctorProfile: {},
-    user: {}
+    user: {},
+    statusSent: false,
+    messages: []
   },
   mutations: {
     CHANGE_IS_LOGGED_IN(state, payload) {
@@ -41,7 +43,13 @@ export default new Vuex.Store({
     },
     FIND_USER_LOGIN(state, payload) {
       state.user = payload
-    }
+    },
+    EMAIL_SENT_STATUS(state, payload) {
+      state.statusSent = payload
+    },
+    PUSH_MESSAGE(state, payload) {
+      state.messages.push(payload)
+    },
   },
   actions: {
     async handleGoogleLogin(context, payload) {
@@ -234,6 +242,31 @@ export default new Vuex.Store({
           text: `${err.response.data.message}`
         });
       }
+    },
+
+    async chatWithDoctor(context, payload) {
+      try {
+        await instanceAxios({
+          method: 'post',
+          url: '/nodemailer',
+          headers: {
+            access_token: localStorage.access_token
+          },
+          data: {
+            to: payload.to,
+            username: payload.username,
+            doctor: payload.doctor
+          }
+        })
+        context.commit('EMAIL_SENT_STATUS', true)
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${err.response.data.message}`
+        });
+      }
+
     },
 
     async signOut(context) {
